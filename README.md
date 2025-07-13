@@ -6,6 +6,10 @@ Vision label manager system
 
 ``` shell
 
+# 全局安装yarn
+npm install -g yarn
+
+
 npm create vite@latest frontend
 
 # 安装依赖
@@ -67,4 +71,37 @@ uvicorn app.main:app --reload
 ``` shell
 npm run dev
 ```
+
+# Setup Storage
+
+## Setup PostgreSQL
+
+``` shell
+
+# Pull the latest PostgreSQL image
+docker pull postgres:latest
+# Create a volume to persist the database data
+docker volume create pgdata
+# Run the PostgreSQL container
+docker run -d --name VisonLabelMS-postgres -e POSTGRES_PASSWORD=123456 -v /home/peter/work/scratch/VisionLabelMS_data/postgre/pgdata:/var/lib/postgresql/data -p 5432:5432 postgres
+
+# compose up
+docker-compose -f docker-compose.yaml up -d
+
+
+# delete container
+docker rm -f VisonLabelMS-postgres
+
+
+# 如果报错 Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:5432 -> 127.0.0.1:0: listen tcp 0.0.0.0:5432: bind: An attempt was made to access a socket in a way forbidden by its access permissions.
+# powershell 中 重启 NAT服务，执行 
+net stop winnat
+net start winnat
+
+```
+
+
+## Setup MinIO
+
+## Setup Redis
 
